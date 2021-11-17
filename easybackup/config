@@ -1,0 +1,65 @@
+# configfile for easybackup
+
+# configure your backup
+
+    # backup from this folder:
+    #
+    # comment this line out if you use folderlist-file
+    # (in fact, you can use both, but this is nonsense)
+    #
+    # backup_folder="/path/to/folder"
+
+    # folderlist-file:
+    #
+    # In case you want to use a list of foldersi nstead
+    # of a single folder you can spezify a text file
+    # containing full /path/to/folder in every line.
+    # Folderlist-file must be in same place as this script.
+    # Don't forget to comment out 'backup_from' some lines
+    # above.
+    # (in fact, you can use both, but this is nonsense)
+    #
+    backup_list="folderlist"
+
+    # backup to this ssh host:
+    ssh_host="192.168.0.100"
+
+    # set the folder on the ssh host for backup
+    ssh_dir="/mnt/iscsi-backup/servername"
+
+    # user for ssh connection
+    # note: there must be a valid ssh certificate for this connection
+    ssh_user="backupuser"
+
+    # private key file to use for this ssh connection
+    ssh_key="/root/.ssh/id_rsa"
+
+
+
+# setup monitoring
+
+    # store logfiles in this way
+    logdir="/var/log/easybackup"
+    logname="easybackup"
+
+    # send logfile to this email
+    sendto="abc@def.gh"
+
+    # name of customer / site
+    site="Acme"
+
+    # name of this server
+    # you can let read the hostname
+    # or specify by yourself
+    server=$(cat /etc/hostname)
+    #server="set.servername.byyourself"
+
+    # headline of logfile
+    headline="Protokolldatei vom täglichen Backup"
+
+    # markerfile on ssh-host
+    # if you want to have a markerfile on the
+    # ssh-host for monitoring then uncomment this
+    # option. this can be useful when you have
+    # monitoring only on the ssh_host side
+    marker_ssh=1

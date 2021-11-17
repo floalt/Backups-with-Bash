@@ -1,0 +1,7 @@
+/etc
+/docker
+/usr/local/scripts
+/var/log/apt-updates
+/var/log/easybackup
+/var/log/nginx
+- /**

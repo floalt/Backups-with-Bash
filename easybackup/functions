@@ -1,0 +1,43 @@
+# functions
+
+# errorcheck
+errorcheck () {
+    if [[ $? = 0 ]] && [[ $thiserrcount = 0 ]]; then
+        echo -e "$yeah" | tee -a $logfile
+    else
+        echo -e "$shit" | tee -a $logfile $errorlog
+        ((errorcount++))
+        thiserrcount=0
+    fi
+}
+
+# failcheck: exit if fails
+failcheck () {
+    if [[ $? = 0 ]] && [[ $failcount = 0 ]]; then
+        echo -e "$yeah" | tee -a $logfile
+    else
+        echo -e "$shit \nENDE" | tee -a $logfile $errorlog
+        exitwitherror             
+    fi
+}
+
+# exit with errors or failure
+exitwitherror () {
+    if [[ $failcount -gt 0 ]]; then
+        # logfile entry
+        echo -e "\nDas Backup ist fehlgeschlagen und wurde abgebrochen\n\n" | tee -a $logfile $errorlog
+        # set markerfile
+        cp $logfile "$logdir"/last-error.log
+        # send email
+        (cat $errorlog; uuencode $logfile logfile.txt) | mail -s "Backup fehlgeschlagen: $server bei $site" $sendto
+        exit 1
+    else
+        # logfile entry
+        echo -e "\nWährend dem Backup sind $errorcount Fehler aufgetreten, es konnte aber normal beendet werden\n\n" | tee -a $logfile $errorlog
+        # set markerfile
+        cp $logfile "$logdir"/last-error.log
+        # send email
+        (cat $errorlog; uuencode $logfile logfile.txt) | mail -s "Backup teilweise fehlgeschlagen: $server bei $site" $sendto
+        exit 1
+    fi
+}

@@ -1,0 +1,50 @@
+# configfile for easyrsync
+
+# configure your sync
+
+    # sync from this folder:
+    # (the slash at the end of the path is important)
+    sync_from="/path/to/folder/"
+
+    # sync to this ssh host:
+    ssh_host="192.168.0.100"
+
+    # set the folder on the ssh host for backup
+    ssh_dir="/mnt/iscsi-backup/[servername]"
+
+    # user for ssh connection
+    # note: there must be a valid ssh certificate for this connection
+    ssh_user="backupuser"
+
+    # private key file to use for this ssh connection
+    ssh_key="/root/.ssh/id_rsa"
+
+
+
+# setup monitoring
+
+    # store logfiles in this way
+    logdir="/var/log/easyrsync"
+    logname="easysync"
+
+    # send logfile to this email
+    sendto="abc@def.gh"
+
+    # name of customer / site
+    site="Acme Inc"
+
+    # name of this server
+    # you can let read the hostname
+    # or specify by yourself
+    server=$(cat /etc/hostname)
+    #server="set.servername.byyourself"
+
+    # headline of logfile
+    headline="Protokolldatei vom Sync"
+
+    # markerfile on ssh-host
+    # if you want to have a markerfile on the
+    # ssh-host for monitoring then uncomment this
+    # option. this can be useful when you have
+    # monitoring only on the ssh_host side
+    marker_ssh=1
