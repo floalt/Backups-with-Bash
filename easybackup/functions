@@ -2,7 +2,7 @@
 
 # errorcheck
 errorcheck () {
-    if [[ $? = 0 ]] && [[ $thiserrcount = 0 ]]; then
+    if [ $? = 0 ] && [ $thiserrcount = 0 ]; then
         echo -e "$yeah" | tee -a $logfile
     else
         echo -e "$shit" | tee -a $logfile $errorlog
@@ -13,17 +13,19 @@ errorcheck () {
 
 # failcheck: exit if fails
 failcheck () {
-    if [[ $? = 0 ]] && [[ $failcount = 0 ]]; then
+    if [ $? = 0 ] && [ $failcount = 0 ]; then
         echo -e "$yeah" | tee -a $logfile
     else
         echo -e "$shit \nENDE" | tee -a $logfile $errorlog
+        ((failcount++))
         exitwitherror             
     fi
 }
 
+
 # exit with errors or failure
 exitwitherror () {
-    if [[ $failcount -gt 0 ]]; then
+    if [ $failcount -gt 0 ]; then
         # logfile entry
         echo -e "\nDas Backup ist fehlgeschlagen und wurde abgebrochen\n\n" | tee -a $logfile $errorlog
         # set markerfile

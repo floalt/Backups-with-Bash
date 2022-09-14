@@ -4,7 +4,7 @@
 #   using rdiff backup over ssh
 #   using a list of folders to backup
 # author: flo.alt@fa-netz.de
-# version: 0.61
+# version: 0.62
 
 # unset variables
     unset backup_list
@@ -96,7 +96,7 @@
         if [[ ! -z $backup_folder ]]; then
             yeah="\nOK: Backup erfolgreich durchgeführt"
             shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
-            rdiff-backup --force --print-statistics -v0 $backup_from $ssh_bakpath | tee -a $logfile; errorcheck
+            (rdiff-backup --force --print-statistics -v0 $backup_from $ssh_bakpath; failcheck)| tee -a $logfile
         fi
 
         # backup a list of folders
@@ -104,7 +104,7 @@
             echo -e "\n"
             yeah="\nOK: Backup erfolgreich durchgeführt"
             shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
-            rdiff-backup --force --print-statistics --include-globbing-filelist $backup_list / $ssh_bakpath | tee -a $logfile; errorcheck
+            (rdiff-backup --force --print-statistics --include-globbing-filelist $backup_list / $ssh_bakpath; failcheck) | tee -a $logfile
         fi
 
 
