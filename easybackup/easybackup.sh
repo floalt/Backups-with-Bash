@@ -4,7 +4,7 @@
 #   using rdiff backup over ssh
 #   using a list of folders to backup
 # author: flo.alt@fa-netz.de
-# version: 0.62
+# version: 0.63
 
 # unset variables
     unset backup_list
@@ -26,7 +26,7 @@
     errorcount=0
     failcount=0
     thiserrcount=0
-    startbak="$(date +%d.%m.%Y-%H%M)"
+    startbak="$(date +%d.%m.%Y-%H:%M)"
     logfile="$logdir"/"$logname"-"$startbak".log
     errorlog="$logdir"/"$logname"-"$startbak".err
     ssh_bakpath="$ssh_user"@"$ssh_host"::"$ssh_dir"
@@ -37,7 +37,7 @@
     touch "$scriptpath"/lastbackup-start
     echo -e $headline \\n\
          \\b"Ausgeführt von $scriptpath/$scriptname" \\n\
-         \\b"Backup gestartet $(date +%d.%m.%y-%h:%m)" \\n\
+         \\b"Backup gestartet $startbak" \\n\
          > "$logfile"
   #  (   # start append all outputs to $logfile
 
