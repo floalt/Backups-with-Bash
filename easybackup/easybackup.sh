@@ -4,7 +4,7 @@
 #   using rdiff backup over ssh
 #   using a list of folders to backup
 # author: flo.alt@fa-netz.de
-# version: 0.63
+# version: 0.64
 
 # unset variables
     unset backup_list
@@ -88,24 +88,32 @@
         failcheck
     fi
 
-    # start backing up
-        
+# start backing up
+    
+    echo -e "\n" >> $logfile
+
+    # backup a single folder
+    if [[ ! -z $backup_folder ]]; then
+        yeah="\nOK: Backup erfolgreich durchgeführt"
+        shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
+        (rdiff-backup --force --print-statistics -v0 $backup_from $ssh_bakpath; failcheck)| tee -a $logfile
+    fi
+
+    # backup a list of folders
+    if [[ ! -z $backup_list ]]; then
+        echo -e "\n"
+        yeah="\nOK: Backup erfolgreich durchgeführt"
+        shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
+        (rdiff-backup --force --print-statistics --include-globbing-filelist $backup_list / $ssh_bakpath; failcheck) | tee -a $logfile
+    fi
+
+# delete old backups
+
         echo -e "\n" >> $logfile
 
-        # backup a single folder
-        if [[ ! -z $backup_folder ]]; then
-            yeah="\nOK: Backup erfolgreich durchgeführt"
-            shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
-            (rdiff-backup --force --print-statistics -v0 $backup_from $ssh_bakpath; failcheck)| tee -a $logfile
-        fi
-
-        # backup a list of folders
-        if [[ ! -z $backup_list ]]; then
-            echo -e "\n"
-            yeah="\nOK: Backup erfolgreich durchgeführt"
-            shit="\nFAIL: Backup (teilweise) fehlgeschlagen"
-            (rdiff-backup --force --print-statistics --include-globbing-filelist $backup_list / $ssh_bakpath; failcheck) | tee -a $logfile
-        fi
+    yeah="\nOK: alte Backups gemäß Retention-Config gelöscht"
+    shit="\nERROR: Fehler bem löschen alter Backups"
+    (rdiff-backup --remove-older-than $retention --force $ssh_bakpath; errorcheck) | tee -a $logfile
 
 
 # the end

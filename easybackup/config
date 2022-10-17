@@ -34,6 +34,10 @@
     # private key file to use for this ssh connection
     ssh_key="/root/.ssh/id_rsa"
 
+    # retention time
+    # D[ay] W[eek] M[onth] Y[ear]
+    retention="2Y"
+
 
 
 # setup monitoring
