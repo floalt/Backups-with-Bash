@@ -1,0 +1,62 @@
+# configfile for easybackup
+
+# configure your backup
+
+    # folderlist-file:
+    #
+    # In case you want to use a list of folders instead
+    # of a single folder you can spezify a text file
+    # containing full /path/to/folder in every line.
+    # Folderlist-file must be in same place as this script.
+    #
+    # backup_list="folderlist"
+
+    # backup from this ssh host:
+    ssh_host="10.11.12.13"
+
+    # set the folder on the ssh host to be backuped
+    ssh_dir="/mnt/nextdata/data"
+    #ssh_dir="/mnt/nextdata/test"
+
+
+    # user for ssh connection
+    # note: there must be a valid ssh certificate for this connection
+    ssh_user="root"
+
+    # private key file to use for this ssh connection
+    ssh_key="~/.ssh/id_rsa_[NAME]"
+
+    # mountpoint for sshfs (fs of remote host will be mounted here)
+    mountpoint="/mnt/bbackup_cloud.[NAME]"    
+    
+    # backup repository
+    repository="/mnt/iscsi-backup/cloud.[NAME]/repository"
+
+    # backup repository passphrase
+    repo_passphrase="mysocoolandsosecreetpassphrase"
+
+
+# setup monitoring
+
+    # store logfiles in this way
+    logdir="/var/log/bbackup_nc[NAME]"
+    logname="bbackup_nc[NAME]"
+
+    # send logfile to this email
+    sendto="[NAME]@it-flows.de"
+
+    # name of customer / site
+    site="Kunde"
+
+    # name of the ssh/backup server
+    server="cloud.[NAME]"
+
+    # headline of logfile
+    headline="Protokolldatei Backup Nextcloud Kunde"
+
+    # markerfile on ssh-host
+    # if you want to have a markerfile on the
+    # ssh-host for monitoring then uncomment this
+    # option. this can be useful when you have
+    # monitoring only on the ssh_host side
+    marker_ssh=1
